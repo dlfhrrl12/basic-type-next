@@ -2,21 +2,24 @@
 
 import { deleteTodo, toggleTodoCompleted } from "@/api/todo-api";
 import { Todo } from "@/types/todo.type";
+import Link from "next/link";
 import React from "react";
 
 interface TodoItemProps {
   todo: Todo;
 }
 
-const TodoItes = ({ todo }: TodoItemProps) => {
+const TodoItem = ({ todo }: TodoItemProps) => {
   const { completed, id, text } = todo;
   return (
     <div>
-      <h2>{text}</h2>
+      <Link href={`/${id}`}>
+        <h2>{text}</h2>
+      </Link>
       <p>{completed ? "완료" : "미완료"}</p>
       <div>
         <button onClick={() => toggleTodoCompleted(id, !completed)}>
-          완료하기
+          {completed ? "취소" : "완료"}
         </button>
         <button onClick={() => deleteTodo(id)}>삭제하기</button>
       </div>
@@ -24,4 +27,4 @@ const TodoItes = ({ todo }: TodoItemProps) => {
   );
 };
 
-export default TodoItes;
+export default TodoItem;

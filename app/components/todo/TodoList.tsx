@@ -1,6 +1,6 @@
 import { getTodos } from "@/api/todo-api";
 import React from "react";
-import TodoItes from "./TodoItes";
+import TodoItes from "./TodoItem";
 
 const TodoList = async () => {
   const todos = await getTodos();
