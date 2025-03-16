@@ -14,6 +14,16 @@ interface TodoItemProps {
 
 const TodoItem = ({ todo }: TodoItemProps) => {
   const { completed, id, text } = todo;
+
+  const handleToggleCompleted = async () => {
+    await fetch(`/api/todos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed: !completed }),
+    });
+  };
   return (
     <article className="flex flex-row items-center justify-between p-2 border-2 rounded-md">
       <Link
@@ -25,10 +35,7 @@ const TodoItem = ({ todo }: TodoItemProps) => {
         <h2>{text}</h2>
       </Link>
       <div className="space-x-2">
-        <Button
-          onClick={() => toggleTodoCompleted(id, !completed)}
-          variant={"outline"}
-        >
+        <Button onClick={handleToggleCompleted} variant={"outline"}>
           {completed ? "취소" : "완료"}
         </Button>
 
