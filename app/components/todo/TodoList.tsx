@@ -5,7 +5,7 @@ import TodoItes from "./TodoItem";
 const TodoList = async () => {
   const todos = await getTodos();
   return (
-    <ul>
+    <ul className="space-y-2">
       {todos.map((todo) => (
         <li key={todo.id}>
           <TodoItes todo={todo} />
