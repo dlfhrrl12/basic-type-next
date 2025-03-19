@@ -1,8 +1,11 @@
+"use client";
+import { useDeleteTodoMutation } from "@/app/query/useTodoMutation";
 // import { deleteTodo } from "@/api/todo-api";
 import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -16,11 +19,12 @@ interface TodoDeleteButtonProps {
 }
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
-  const handleDelete = async () => {
-    await fetch(`/api/toods/${id}`, {
-      method: "DELETE",
-    });
-  };
+  const { mutate: deleteTodo } = useDeleteTodoMutation();
+  // const handleDelete = async () => {
+  //   await fetch(`/api/toods/${id}`, {
+  //     method: "DELETE",
+  //   });
+  // };
 
   return (
     <AlertDialog>
@@ -30,6 +34,7 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>정말로 삭제하시겠습니까?</AlertDialogTitle>
+          <AlertDialogDescription className="hidden"></AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>취소</AlertDialogCancel>

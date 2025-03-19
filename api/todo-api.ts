@@ -1,5 +1,3 @@
-"use server";
-
 import { Todo } from "@/types/todo.type";
 
 const BASE_URL = "http://localhost:3000/todos";
