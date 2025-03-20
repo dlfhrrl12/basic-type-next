@@ -4,7 +4,7 @@ import React from "react";
 const LoadingIndicator = () => {
   return (
     <div className="flex justify-center items-center p-2">
-      <LoaderCircle />
+      <LoaderCircle className="animate-spin" />
     </div>
   );
 };

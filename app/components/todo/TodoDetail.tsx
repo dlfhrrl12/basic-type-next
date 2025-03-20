@@ -1,3 +1,4 @@
+"use client";
 import { useTodoItemQuery } from "@/app/query/useTodoQuery";
 import LoadingIndicator from "../LoadingIndicator";
 import TodoItem from "./TodoItem";

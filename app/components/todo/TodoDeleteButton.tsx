@@ -20,11 +20,6 @@ interface TodoDeleteButtonProps {
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
   const { mutate: deleteTodo } = useDeleteTodoMutation();
-  // const handleDelete = async () => {
-  //   await fetch(`/api/toods/${id}`, {
-  //     method: "DELETE",
-  //   });
-  // };
 
   return (
     <AlertDialog>
@@ -38,7 +33,7 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>취소</AlertDialogCancel>
-          <Button variant={"destructive"} onClick={handleDelete}>
+          <Button variant={"destructive"} onClick={() => deleteTodo(id)}>
             삭제
           </Button>
         </AlertDialogFooter>
