@@ -7,19 +7,29 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { getTodos } from "@/api/todo-api";
+import TodoFilterSwitch from "./components/todo/TodoFilterSwitch";
 
 const HomePage = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["todos"],
-    queryFn: getTodos,
+    queryKey: ["todos", "all"],
+    queryFn: () => getTodos(),
   });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["todos", "completed"],
+    queryFn: () => getTodos("completed"),
+  });
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section>
         <div className="container p-2 mx-auto space-y-4">
           <TodoForm />
+          <div className="flex flex-row justify-end">
+            <TodoFilterSwitch />
+          </div>
           <TodoList />
         </div>
       </section>

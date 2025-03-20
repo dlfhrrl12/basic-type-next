@@ -1,9 +1,11 @@
 "use client";
 import { useTodosQuery } from "@/app/query/useTodoQuery";
 import TodoItem from "./TodoItem";
+import { useTodoFilterStore } from "@/store/useTodoFilterStore";
 
 const TodoList = () => {
-  const { data: todos } = useTodosQuery();
+  const { filter } = useTodoFilterStore();
+  const { data: todos } = useTodosQuery(filter);
 
   return (
     <ul className="space-y-2">
