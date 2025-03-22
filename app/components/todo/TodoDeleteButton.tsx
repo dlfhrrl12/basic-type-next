@@ -1,5 +1,5 @@
-"use client";
-import { useDeleteTodoMutation } from "@/app/query/useTodoMutation";
+'use client';
+import { useDeleteTodoMutation } from '@/app/query/useTodoMutation';
 // import { deleteTodo } from "@/api/todo-api";
 import {
   AlertDialog,
@@ -10,13 +10,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import React from "react";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Todo } from '@/types/todo.type';
+import { Trash2 } from 'lucide-react';
+import React from 'react';
 
 interface TodoDeleteButtonProps {
-  id: string;
+  id: Todo['id'];
 }
 
 const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
@@ -25,7 +26,7 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"} size={"icon"}>
+        <Button variant={'destructive'} size={'icon'}>
           <Trash2 />
         </Button>
       </AlertDialogTrigger>
@@ -36,7 +37,7 @@ const TodoDeleteButton = ({ id }: TodoDeleteButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>취소</AlertDialogCancel>
-          <Button variant={"destructive"} onClick={() => deleteTodo(id)}>
+          <Button variant={'destructive'} onClick={() => deleteTodo(id)}>
             삭제
           </Button>
         </AlertDialogFooter>

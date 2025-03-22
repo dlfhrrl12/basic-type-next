@@ -1,63 +1,68 @@
-import { FilterType } from "@/store/useTodoFilterStore";
-import { Todo } from "@/types/todo.type";
-
-const BASE_URL = "http://localhost:3000/todos";
+import { FilterType } from '@/store/useTodoFilterStore';
+import { Todo } from '@/types/todo.type';
+import { createClient } from '@/utils/supabase/client';
 
 export const getTodos = async (filter?: FilterType) => {
-  const url = new URL(BASE_URL);
-  if (filter === "completed") {
-    url.searchParams.set("completed", "true");
+  const supabase = createClient();
+
+  const todoQuery = supabase
+    .from('todos')
+    .select()
+    .order('created_at', { ascending: false });
+
+  if (filter === 'completed') {
+    todoQuery.eq('completed', true);
   }
-  const response = await fetch(url.toString(), {
-    next: {
-      tags: ["todos"],
-    },
-  });
-  const data: Todo[] = await response.json();
+
+  const { data, error } = await todoQuery;
+
+  if (error) {
+    throw new Error(error.message);
+  }
   return data;
 };
 
-export const getTodoItem = async (id: Todo["id"]) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    next: {
-      tags: ["todos", id],
-    },
-  });
-  const data: Todo = await res.json();
+export const getTodoItem = async (id: Todo['id']) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('todos')
+    .select()
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
   return data;
 };
 
-export const createTodo = async (text: string) => {
-  const res = await fetch(BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ text, completed: false }),
-  });
-  const data: Todo = await res.json();
-  return data;
+export const createTodo = async (title: Todo['title']) => {
+  const supabase = createClient();
+  const { error } = await supabase.from('todos').insert({ title });
+  if (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const deleteTodo = async (id: Todo["id"]) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-  const data: Todo = await res.json();
-  return data;
+export const deleteTodo = async (id: Todo['id']) => {
+  const supabase = createClient();
+  const { error } = await supabase.from('todos').delete().eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
 };
 
 export const toggleTodoCompleted = async (
-  id: Todo["id"],
-  completed: Todo["completed"]
+  id: Todo['id'],
+  completed: Todo['completed']
 ) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ completed }),
-  });
-  const data: Todo = await res.json();
-  return data;
+  const supabase = createClient();
+  const { error } = await supabase
+    .from('todos')
+    .update({ completed })
+    .eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
 };

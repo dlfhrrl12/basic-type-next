@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { Todo } from "@/types/todo.type";
-import Link from "next/link";
-import TodoDeleteButton from "./TodoDeleteButton";
-import { useToggleTodoMutation } from "@/app/query/useTodoMutation";
-import { useId } from "react";
-import { CheckedState } from "@radix-ui/react-checkbox";
-import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from '@/lib/utils';
+import { Todo } from '@/types/todo.type';
+import Link from 'next/link';
+import TodoDeleteButton from './TodoDeleteButton';
+import { useToggleTodoMutation } from '@/app/query/useTodoMutation';
+import { useId } from 'react';
+import { CheckedState } from '@radix-ui/react-checkbox';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface TodoItemProps {
   todo: Todo;
@@ -15,11 +15,11 @@ interface TodoItemProps {
 
 const TodoItem = ({ todo }: TodoItemProps) => {
   const { mutate: toggleTodoCompleted } = useToggleTodoMutation();
-  const { completed, id, text } = todo;
+  const { completed, id, title } = todo;
   const checkboxId = useId();
 
   const onCheckedChange = (checked: CheckedState) => {
-    if (checked === "indeterminate") return;
+    if (checked === 'indeterminate') return;
 
     toggleTodoCompleted({ id, completed: checked });
   };
@@ -34,11 +34,11 @@ const TodoItem = ({ todo }: TodoItemProps) => {
         />
         <Link
           href={`/${id}`}
-          className={cn("hover:underline", {
-            "line-through": completed,
+          className={cn('hover:underline', {
+            'line-through': completed,
           })}
         >
-          <h2>{text}</h2>
+          <h2>{title}</h2>
         </Link>
       </div>
       <div className="space-x-2">
