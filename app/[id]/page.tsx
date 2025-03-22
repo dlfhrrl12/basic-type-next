@@ -6,7 +6,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-// import { getTodoItem } from "@/api/todo-api";
+import { createClient } from '@/utils/supabase/server';
+import { getTodoItem } from '@/api/todo-api';
 
 interface DetailPageProops {
   params: Promise<{ id: string }>;
@@ -15,16 +16,18 @@ interface DetailPageProops {
 const DetailPage = async ({ params }: DetailPageProops) => {
   const { id } = await params;
   const queryClient = new QueryClient();
+  const supabaseClient = await createClient();
+  const todoId = Number(id);
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["todos", id],
-  //   queryFn: () => getTodoItem(id),
-  // });
+  await queryClient.prefetchQuery({
+    queryKey: ['todos', todoId],
+    queryFn: () => getTodoItem(supabaseClient, todoId),
+  });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section>
         <div className="container p-2 mx-auto space-y-4">
-          <TodoDetail id={Number(id)} />
+          <TodoDetail id={todoId} />
           <Link href={'/'}>
             <Button className="w-full">돌아가기</Button>
           </Link>
