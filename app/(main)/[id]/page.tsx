@@ -1,13 +1,14 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import TodoDetail from '../components/todo/TodoDetail';
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
-} from '@tanstack/react-query';
-import { createClient } from '@/utils/supabase/server';
-import { getTodoItem } from '@/api/todo-api';
+} from "@tanstack/react-query";
+import { createClient } from "@/utils/supabase/server";
+import { getTodoItem } from "@/api/todo-api";
+import TodoDetail from "@/app/components/todo/TodoDetail";
 
 interface DetailPageProops {
   params: Promise<{ id: string }>;
@@ -20,7 +21,7 @@ const DetailPage = async ({ params }: DetailPageProops) => {
   const todoId = Number(id);
 
   await queryClient.prefetchQuery({
-    queryKey: ['todos', todoId],
+    queryKey: ["todos", todoId],
     queryFn: () => getTodoItem(supabaseClient, todoId),
   });
   return (
@@ -28,7 +29,7 @@ const DetailPage = async ({ params }: DetailPageProops) => {
       <section>
         <div className="container p-2 mx-auto space-y-4">
           <TodoDetail id={todoId} />
-          <Link href={'/'}>
+          <Link href={"/"}>
             <Button className="w-full">돌아가기</Button>
           </Link>
         </div>
