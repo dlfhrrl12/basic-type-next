@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "server": "json-server --watch db.json --port 3000",
-    "gen:types": "supabase gen types typescript --project-id sldfvbeargrqvvemcexx --schema public > database.types.ts"
+    "gen:types": "supabase gen types typescript --project-id cnfgshsqwihglrecyujt --schema public > database.types.ts"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -42,7 +42,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
-    "supabase": "^2.19.7",
+    "supabase": "^2.30.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
